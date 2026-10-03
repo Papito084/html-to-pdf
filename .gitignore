@@ -1,0 +1,4 @@
+.system_generated/
+.user_uploaded/
+scratch/
+*.metadata.json

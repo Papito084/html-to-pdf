@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML → PDF Converter | Conversor Profesional</title>
+  <meta name="description" content="Convierte archivos HTML o código HTML a PDF de forma perfecta, rápida y sin errores. Herramienta profesional de conversión online." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Librerías PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Background particles -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">HTML<span class="logo-accent">→</span>PDF</span>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Conversión perfecta garantizada
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">🚀 Herramienta Profesional</div>
+      <h1 class="hero-title">
+        Convierte <span class="gradient-text">HTML a PDF</span><br/>sin problemas
+      </h1>
+      <p class="hero-subtitle">
+        Sube un archivo HTML o pega tu código directamente. Obtén un PDF perfecto, con estilos, imágenes y fuentes correctamente renderizadas.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main App -->
+  <main class="app-container">
+
+    <!-- Mode Tabs -->
+    <div class="mode-tabs" role="tablist">
+      <button
+        class="tab-btn active"
+        id="tab-code"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-code"
+        onclick="switchTab('code')"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Pegar Código HTML
+      </button>
+      <button
+        class="tab-btn"
+        id="tab-file"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-file"
+        onclick="switchTab('file')"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Subir Archivo HTML
+      </button>
+    </div>
+
+    <!-- Panel: Pegar Código -->
+    <div class="panel active" id="panel-code" role="tabpanel" aria-labelledby="tab-code">
+      <div class="editor-wrapper">
+        <div class="editor-header">
+          <div class="editor-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="editor-label">editor.html</span>
+          <button class="btn-clear" id="btn-clear-code" onclick="clearCode()" title="Limpiar editor">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            Limpiar
+          </button>
+        </div>
+        <textarea
+          id="html-input"
+          class="code-editor"
+          placeholder="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      body { font-family: Arial, sans-serif; }
+      h1 { color: #6c63ff; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+    &lt;p&gt;Este es mi PDF perfecto.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Editor de código HTML"
+        ></textarea>
+        <div class="editor-footer">
+          <span id="char-count">0 caracteres</span>
+          <button class="btn-paste-example" id="btn-example" onclick="loadExample()">
+            ✨ Cargar ejemplo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Subir Archivo -->
+    <div class="panel" id="panel-file" role="tabpanel" aria-labelledby="tab-file">
+      <div
+        class="dropzone"
+        id="dropzone"
+        onclick="triggerFileInput()"
+        ondragover="handleDragOver(event)"
+        ondragleave="handleDragLeave(event)"
+        ondrop="handleDrop(event)"
+        role="button"
+        aria-label="Zona de arrastre para archivo HTML"
+        tabindex="0"
+        onkeypress="if(event.key==='Enter') triggerFileInput()"
+      >
+        <div class="dropzone-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="dropzone-text">
+          <p class="dropzone-title">Arrastra tu archivo HTML aquí</p>
+          <p class="dropzone-subtitle">o haz clic para seleccionar</p>
+          <p class="dropzone-hint">Solo archivos <strong>.html</strong> y <strong>.htm</strong></p>
+        </div>
+        <input
+          type="file"
+          id="file-input"
+          accept=".html,.htm"
+          style="display:none"
+          onchange="handleFileSelect(event)"
+          aria-label="Seleccionar archivo HTML"
+        />
+      </div>
+      <div class="file-preview" id="file-preview" style="display:none">
+        <div class="file-info">
+          <div class="file-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="file-details">
+            <span class="file-name" id="file-name">archivo.html</span>
+            <span class="file-size" id="file-size">0 KB</span>
+          </div>
+          <button class="btn-remove-file" id="btn-remove-file" onclick="removeFile()" title="Eliminar archivo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="file-code-preview">
+          <div class="preview-label">Vista previa del código</div>
+          <pre id="file-code-preview-content" class="file-code-content"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Options -->
+    <div class="options-section">
+      <h2 class="options-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Opciones del PDF
+      </h2>
+      <div class="options-grid">
+
+        <div class="option-group">
+          <label class="option-label" for="pdf-filename">Nombre del archivo PDF</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="pdf-filename"
+              class="option-input"
+              value="documento"
+              placeholder="nombre-del-archivo"
+              aria-label="Nombre del archivo PDF"
+            />
+            <span class="input-suffix">.pdf</span>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label" for="pdf-format">Formato de página</label>
+          <select id="pdf-format" class="option-select" aria-label="Formato de página PDF">
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="letter">Carta (216 × 279 mm)</option>
+            <option value="a3">A3 (297 × 420 mm)</option>
+            <option value="a5">A5 (148 × 210 mm)</option>
+            <option value="legal">Legal (216 × 356 mm)</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label" for="pdf-orientation">Orientación</label>
+          <select id="pdf-orientation" class="option-select" aria-label="Orientación del PDF">
+            <option value="portrait">Vertical (Portrait)</option>
+            <option value="landscape">Horizontal (Landscape)</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label" for="pdf-scale">Escala de renderizado</label>
+          <select id="pdf-scale" class="option-select" aria-label="Escala de renderizado">
+            <option value="1">1x — Estándar</option>
+            <option value="2" selected>2x — Alta calidad</option>
+            <option value="3">3x — Ultra HD</option>
+          </select>
+        </div>
+
+        <div class="option-group option-group-wide">
+          <label class="option-label">Márgenes (mm)</label>
+          <div class="margin-grid">
+            <div class="margin-item">
+              <label for="margin-top" class="margin-label">↑ Superior</label>
+              <input type="number" id="margin-top" class="margin-input" value="10" min="0" max="50" />
+            </div>
+            <div class="margin-item">
+              <label for="margin-right" class="margin-label">→ Derecho</label>
+              <input type="number" id="margin-right" class="margin-input" value="10" min="0" max="50" />
+            </div>
+            <div class="margin-item">
+              <label for="margin-bottom" class="margin-label">↓ Inferior</label>
+              <input type="number" id="margin-bottom" class="margin-input" value="10" min="0" max="50" />
+            </div>
+            <div class="margin-item">
+              <label for="margin-left" class="margin-label">← Izquierdo</label>
+              <input type="number" id="margin-left" class="margin-input" value="10" min="0" max="50" />
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group option-group-wide">
+          <label class="option-label">Opciones adicionales</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label" for="opt-background">
+              <input type="checkbox" id="opt-background" checked />
+              <span class="checkbox-custom"></span>
+              Incluir fondos y colores CSS
+            </label>
+            <label class="checkbox-label" for="opt-page-break">
+              <input type="checkbox" id="opt-page-break" checked />
+              <span class="checkbox-custom"></span>
+              Respetar saltos de página automáticos
+            </label>
+            <label class="checkbox-label" for="opt-compress">
+              <input type="checkbox" id="opt-compress" />
+              <span class="checkbox-custom"></span>
+              Comprimir PDF (reduce tamaño)
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Convert Button -->
+    <div class="convert-section">
+      <button class="btn-convert" id="btn-convert" onclick="convertToPDF()">
+        <span class="btn-convert-content">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Convertir a PDF
+        </span>
+        <span class="btn-convert-loader" style="display:none">
+          <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Generando PDF...
+        </span>
+      </button>
+      <p class="convert-note">
+        🔒 Procesado 100% en tu navegador. Ningún dato sale de tu equipo.
+      </p>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section" id="preview-section" style="display:none">
+      <div class="preview-header">
+        <h2 class="preview-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Vista Previa del HTML
+        </h2>
+        <div class="preview-actions">
+          <button class="btn-preview-action" id="btn-refresh-preview" onclick="refreshPreview()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Actualizar
+          </button>
+        </div>
+      </div>
+      <div class="preview-frame-wrapper">
+        <iframe id="preview-iframe" class="preview-iframe" sandbox="allow-same-origin allow-scripts" title="Vista previa del HTML"></iframe>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>HTML → PDF Converter &nbsp;•&nbsp; 100% local &nbsp;•&nbsp; Sin publicidad &nbsp;•&nbsp; Sin límites</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
